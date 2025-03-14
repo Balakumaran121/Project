@@ -10,7 +10,7 @@ const filteredList = finalList?.filter(todo =>
 );
 
   return (
-    <div className='flex flex-col gap-2 my-10'>
+    <div className='flex flex-col gap-2 mt-10'>
       <div className=' flex justify-end text-white'>
       <input   value={search} onChange={(e) => setSearch(e.target.value)}
       type="text" placeholder="Enter the name" className='bg-[#434343] py-2 px-4 rounded-md outline-none' />
@@ -38,7 +38,7 @@ const filteredList = finalList?.filter(todo =>
             </tr>
             )) :
               <tr >
-                <td colSpan={headers.length} className='bg-[#434343] text-white h-[80vh] text-center py-4'>No records found</td>
+                <td colSpan={headers.length} className='bg-[#434343] text-white h-[72vh] text-center py-4'>No records found</td>
               </tr>
           }
         </tbody>
