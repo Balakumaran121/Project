@@ -46,8 +46,8 @@ Ensure you have the following installed:
 
 ### Clone the Repository
 ```sh
-git clone enter project git url
-cd project name
+git clone <your-project-git-url>
+cd <project-name>
 npm start
 ```
 
