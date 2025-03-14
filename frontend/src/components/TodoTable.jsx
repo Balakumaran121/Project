@@ -5,8 +5,8 @@ const TodoTable = ({headers,finalList,handleSelectTodo}) => {
 
 const [search, setSearch] = useState("");
 
-const filteredList = finalList.filter(todo =>
-  todo.user.toLowerCase().includes(search.toLowerCase())
+const filteredList = finalList?.filter(todo =>
+  todo?.user?.toLowerCase().includes(search.toLowerCase())
 );
 
   return (
@@ -25,7 +25,7 @@ const filteredList = finalList.filter(todo =>
         </thead>
         <tbody className='divide-y divide-gray-200'>
           {
-            finalList?.length ? filteredList?.map((todo) => (
+            filteredList?.length ? filteredList?.map((todo) => (
               <tr className=' ' key={todo?._id}>
                 <td className='px-4 py-2 font-medium whitespace-nowrap text-white'>{todo?.text}</td>
                 <td className='px-4 py-2 whitespace-nowrap text-white'>{todo?.priority}</td>

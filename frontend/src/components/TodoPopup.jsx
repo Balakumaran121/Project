@@ -9,17 +9,19 @@ const TodoPopup = ({ isOpen, onClose, title, editTodoData }) => {
 
   const validationSchema = Yup.object({
     text: Yup.string().required('Required'),
-    priority: Yup.string().required('Required')
+    priority: Yup.string().required('Required'),
+    user:Yup.string().required("Required")
   })
   // const isInitialized = useRef(false)
   const formik = useFormik({
     initialValues: {
       text: "",
-      priority: ""
+      priority: "",
+      user:""
     },
     validationSchema,
     onSubmit: (values) => {
-      const data = { ...values, deadline: '4/3/25' }
+      const data = { ...values, deadline: '4/3/25'}
       handleSubmit(data)
     }
 
@@ -73,6 +75,9 @@ const TodoPopup = ({ isOpen, onClose, title, editTodoData }) => {
         <label htmlFor="" className='text-xl  font-bold text-white py-2'>Priority</label>
         <input type="text" placeholder='Enter priority level' className='outline-none border-b border-slate-500 rounded-md px-2 py-2 placeholder:text-slate-300 text-white placeholder:font-semibold' name='priority' value={formik.values.priority} onChange={formik.handleChange} />
         {formik.errors.priority ? <span className='text-sm text-red-500 m-2'>{formik.errors.priority}</span> : ""}
+        <label htmlFor="" className='text-xl  font-bold text-white py-2'>User Name</label>
+        <input type="text" placeholder='Enter priority level' className='outline-none border-b border-slate-500 rounded-md px-2 py-2 placeholder:text-slate-300 text-white placeholder:font-semibold' name='user' value={formik.values.user} onChange={formik.handleChange} />
+        {formik.errors.user ? <span className='text-sm text-red-500 m-2'>{formik.errors.user}</span> : ""}
         <div className='flex items-center justify-center gap-4'>
           <button onClick={onClose} className='px-8 py-2 bg-blue-500 hover:bg-blue-600 cursor-pointer w-fit  rounded-md inset-0 z-10 my-4 text-white font-normal'>Close</button>
           <button type='submit' onClick={formik.handleSubmit} className='px-8 py-2 bg-blue-500 hover:bg-blue-600 cursor-pointer w-fit  rounded-md inset-0 z-10 my-4 text-white font-normal'>Submit</button>
