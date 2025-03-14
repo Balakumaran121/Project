@@ -12,7 +12,7 @@ const View = () => {
   const todoId = state?.id
   const { data, error, isLoading } = useQuery({ queryKey: ['todos', todoId], queryFn: () => getSingleTodos(todoId), staleTime: 10000, enabled: !!todoId })
   const handleBack=()=>{
-    navigate("/")
+   window.history.back()
   }
   if (isLoading) return <Loader/>
   if (error) return <div>Error...</div>

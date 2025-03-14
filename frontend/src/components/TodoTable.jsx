@@ -15,11 +15,11 @@ const filteredList = finalList?.filter(todo =>
       <input   value={search} onChange={(e) => setSearch(e.target.value)}
       type="text" placeholder="Enter the name" className='bg-[#434343] py-2 px-4 rounded-md outline-none' />
       </div>
-    <table className='min-w-full divide-y-2 divide-gray-200 dark:bg-gray-400  text-sm'>
+    <table className='min-w-full divide-y-2 divide-gray-200 dark:bg-gray-400  text-sm table-fixed'>
         <thead className='ltr:text-left rtl:text-right '>
           <tr>
             {headers.map((header) => (
-              <th key={header?.id} className='px-4 py-2 font-extrabold text-md whitespace-nowrap text-white'>{header?.name}</th>
+              <th key={header?.id} className='px-4 w-1/4 py-2 font-extrabold text-md whitespace-nowrap text-white'>{header?.name}</th>
             ))}
           </tr>
         </thead>

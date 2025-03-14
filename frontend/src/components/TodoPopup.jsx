@@ -70,13 +70,13 @@ const TodoPopup = ({ isOpen, onClose, title, editTodoData }) => {
 
       <div className='bg-[#434343] flex flex-col p-10 rounded-md w-[30%]'>
         <label htmlFor="" className='text-xl font-bold text-white py-2'>{title} Task </label>
-        <input type="text" placeholder='Enter task name' className='outline-none  border-b border-slate-500 rounded-md px-2 py-2 placeholder:text-slate-300 placeholder:font-semibold text-white' name='text' value={formik.values.text} onChange={formik.handleChange} />
+        <input type="text" placeholder='Enter task name' autoComplete='off' className='outline-none  border-b border-slate-500 rounded-none px-2 py-2 placeholder:text-slate-300 placeholder:font-semibold text-white' name='text' value={formik.values.text} onChange={formik.handleChange} />
         {formik.errors.text ? <span className='text-sm text-red-500 m-2'>{formik.errors.text}</span> : ""}
         <label htmlFor="" className='text-xl  font-bold text-white py-2'>Priority</label>
-        <input type="text" placeholder='Enter priority level' className='outline-none border-b border-slate-500 rounded-md px-2 py-2 placeholder:text-slate-300 text-white placeholder:font-semibold' name='priority' value={formik.values.priority} onChange={formik.handleChange} />
+        <input type="text" placeholder='Enter priority level' autoComplete='off' className='outline-none border-b border-slate-500 rounded-none px-2 py-2 placeholder:text-slate-300 text-white placeholder:font-semibold' name='priority' value={formik.values.priority} onChange={formik.handleChange} />
         {formik.errors.priority ? <span className='text-sm text-red-500 m-2'>{formik.errors.priority}</span> : ""}
         <label htmlFor="" className='text-xl  font-bold text-white py-2'>User Name</label>
-        <input type="text" placeholder='Enter priority level' className='outline-none border-b border-slate-500 rounded-md px-2 py-2 placeholder:text-slate-300 text-white placeholder:font-semibold' name='user' value={formik.values.user} onChange={formik.handleChange} />
+        <input type="text" placeholder='Enter user name' autoComplete='off' className='outline-none border-b border-slate-500 rounded-none px-2 py-2 placeholder:text-slate-300 text-white placeholder:font-semibold' name='user' value={formik.values.user} onChange={formik.handleChange} />
         {formik.errors.user ? <span className='text-sm text-red-500 m-2'>{formik.errors.user}</span> : ""}
         <div className='flex items-center justify-center gap-4'>
           <button onClick={onClose} className='px-8 py-2 bg-blue-500 hover:bg-blue-600 cursor-pointer w-fit  rounded-md inset-0 z-10 my-4 text-white font-normal'>Close</button>
