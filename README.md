@@ -23,7 +23,7 @@ A Full Stack Todo Project using MERN (MongoDB, Express.js, React, Node.js) is a 
 ## Project Structure
 
 ### Frontend (React.js)
-- Uses React Hooks (`useState`, `useEffect`, `useContext`)
+- Using React Hooks
 - Zustand for state management
 - Tailwind CSS for styling
 - React Router for navigation
@@ -46,8 +46,8 @@ Ensure you have the following installed:
 
 ### Clone the Repository
 ```sh
-git clone https://github.com/yourusername/mern-todo-app.git
-cd mern-todo-app
+git clone enter project git url
+cd project name
 npm start
 ```
 
