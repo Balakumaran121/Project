@@ -1,4 +1,4 @@
-# Full stact Todo project (MERN)
+# Full stack Todo project (MERN)
 
 A brief description of your project.
 
