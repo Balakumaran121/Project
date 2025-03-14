@@ -50,7 +50,7 @@ const queryClient = useQueryClient()
   }
 
   return (
-    <div className='overflow-x-auto p-10 bg-[#303030] h-screen'>
+    <div className='overflow-x-auto p-10 bg-[#303030] h-screen [scrollbar-width:none]'>
       <Header setOpenCreatePopop={setOpenCreatePopop} />
       <TodoTable headers={headers} finalList={finalList} handleSelectTodo={handleSelectTodo} />
       <TodoPopup isOpen={openCreatePopop} onClose={handleClose} title={title} editTodoData={editTodoData} />
