@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Input } from './ui/input';
 import { Button } from './ui/button';
+import { ChevronDown, ChevronUp, Equal, Eye, Pencil, Trash2 } from 'lucide-react';
 
 const TodoTable = ({ headers, finalList, handleSelectTodo }) => {
 
@@ -10,7 +11,16 @@ const TodoTable = ({ headers, finalList, handleSelectTodo }) => {
   const filteredList = finalList?.filter(todo =>
     todo?.user?.toLowerCase().includes(search.toLowerCase())
   );
-
+const getPriorityIcons = (field)=>{
+  switch(field?.toLowerCase()){
+    case 'high':
+      return <ChevronUp className='text-red-500'/>;
+    case 'low':
+      return <ChevronDown className="text-yellow-500"/>;
+    default:
+      return <Equal  className="text-cyan-500"/>
+  }
+}
   return (
     <div className='flex flex-col gap-2 mt-10'>
       <div className=' flex justify-end text-white'>
@@ -30,12 +40,21 @@ const TodoTable = ({ headers, finalList, handleSelectTodo }) => {
             filteredList?.length ? filteredList?.map((todo) => (
               <tr className=' ' key={todo?._id}>
                 <td className='px-4 py-2 font-medium whitespace-nowrap text-white'>{todo?.text}</td>
-                <td className='px-4 py-2 whitespace-nowrap text-white'>{todo?.priority}</td>
-                <td className='px-4 py-2 whitespace-nowrap text-white'>{todo?.deadline}</td>
-                <td className='space-x-5 py-2'>
-                  <Button className="cursor-pointer" onClick={() => handleSelectTodo(todo._id, "view")} variant="secondary">View</Button>
-                  <Button className="cursor-pointer text-white bg-cyan-500 hover:bg-cyan-600" onClick={() => handleSelectTodo(todo._id, "edit")}  >Edit</Button>
-                  <Button className="cursor-pointer" onClick={() => handleSelectTodo(todo._id, "delete")} variant="destructive">Delete</Button>
+                <td className="px-4 py-2 whitespace-nowrap text-white flex items-center">
+                  <span>{getPriorityIcons(todo?.priority)}</span>
+                  <p >
+
+                  {todo?.priority}
+                  </p>
+                  </td>
+                <td className='px-4 py-2 whitespace-nowrap text-white'>{todo?.deadline}</td>  
+                <td className='px-4 py-2 whitespace-nowrap text-white'>
+                  <p className={`${todo.status?"bg-green-500":"bg-red-500"} rounded-md w-fit px-2`}>{todo?.status?"Active":"In-active"}</p>
+                </td>
+                <td className='space-x-1 py-2 flex'>
+                  <Button className="cursor-pointer text-white bg-zinc-800 " onClick={() => handleSelectTodo(todo._id, "view")} variant="icon"><Eye /></Button>
+                  <Button className="cursor-pointer text-white bg-cyan-500 " onClick={() => handleSelectTodo(todo._id, "edit")} variant="icon" ><Pencil /></Button>
+                  <Button className="cursor-pointer text-white bg-red-500 " onClick={() => handleSelectTodo(todo._id, "delete")} variant="icon"><Trash2 /></Button>
                 </td>
               </tr>
             )) :

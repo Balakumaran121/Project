@@ -4,8 +4,6 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { createTodo, editTodo } from '../service/api'
-import { Label } from './ui/label'
-import { Input } from './ui/input'
 import { Button } from './ui/button'
 import CustomInput from './CustomInput'
 const TodoPopup = ({ isOpen, onClose, title, editTodoData }) => {
@@ -25,7 +23,7 @@ const TodoPopup = ({ isOpen, onClose, title, editTodoData }) => {
     },
     validationSchema,
     onSubmit: (values) => {
-      const data = { ...values, deadline: '4/3/25' }
+      const data = { ...values, deadline: '4/3/25' ,status:true}
       handleSubmit(data)
     }
 

@@ -4,7 +4,7 @@ import React from 'react'
 import { registerUser } from '../service/api'
 import { Link, useNavigate } from 'react-router-dom'
 import { validationSchema } from '../service/utlis'
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent,  CardHeader, CardTitle } from '@/components/ui/card';
 import { Form } from '@/components/ui/form'
 import { Button } from '@/components/ui/button'
 import CustomInput from '@/components/CustomInput'
