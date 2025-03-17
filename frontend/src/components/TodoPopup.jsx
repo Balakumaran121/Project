@@ -4,24 +4,28 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { createTodo, editTodo } from '../service/api'
+import { Label } from './ui/label'
+import { Input } from './ui/input'
+import { Button } from './ui/button'
+import CustomInput from './CustomInput'
 const TodoPopup = ({ isOpen, onClose, title, editTodoData }) => {
 
 
   const validationSchema = Yup.object({
-    text: Yup.string().required('Required'),
-    priority: Yup.string().required('Required'),
-    user:Yup.string().required("Required")
+    text: Yup.string().required('Text Required'),
+    priority: Yup.string().required('Priority Required'),
+    user: Yup.string().required("User Required")
   })
   // const isInitialized = useRef(false)
   const formik = useFormik({
     initialValues: {
       text: "",
       priority: "",
-      user:""
+      user: ""
     },
     validationSchema,
     onSubmit: (values) => {
-      const data = { ...values, deadline: '4/3/25'}
+      const data = { ...values, deadline: '4/3/25' }
       handleSubmit(data)
     }
 
@@ -29,10 +33,12 @@ const TodoPopup = ({ isOpen, onClose, title, editTodoData }) => {
   useEffect(() => {
     if (title === "Edit" && editTodoData) {
       formik.setValues(editTodoData)
-    } else {
-      formik.resetForm()
     }
-  }, [editTodoData, title])
+    else {
+      formik.resetForm()
+      formik.setErrors({})
+    }
+  }, [editTodoData, title, isOpen])
 
 
   const queryClient = useQueryClient()
@@ -63,24 +69,37 @@ const TodoPopup = ({ isOpen, onClose, title, editTodoData }) => {
       editMutate({ id: editTodoData?._id, updatedFields: values })
     }
   }
+
+  const inputFields = [
+
+
+    {id:1,
+      value:"text"
+    },
+    {
+      id:2,
+      value:'priority'
+    },
+    {id:3,
+      value:"user"
+    }
+  ]
   if (!isOpen) return null
   return (
-    <div className='fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-25 z-10'>
+    <div className='fixed top-0 left-0 w-full h-full flex  justify-center items-center bg-zinc-950 bg-opacity-25 z-10'>
 
-
-      <div className='bg-[#434343] flex flex-col p-10 rounded-md w-[30%]'>
-        <label htmlFor="" className='text-xl font-bold text-white py-2'>{title} Task </label>
-        <input type="text" placeholder='Enter task name' autoComplete='off' className='outline-none  border-b border-slate-500 rounded-none px-2 py-2 placeholder:text-slate-300 placeholder:font-semibold text-white' name='text' value={formik.values.text} onChange={formik.handleChange} />
-        {formik.errors.text ? <span className='text-sm text-red-500 m-2'>{formik.errors.text}</span> : ""}
-        <label htmlFor="" className='text-xl  font-bold text-white py-2'>Priority</label>
-        <input type="text" placeholder='Enter priority level' autoComplete='off' className='outline-none border-b border-slate-500 rounded-none px-2 py-2 placeholder:text-slate-300 text-white placeholder:font-semibold' name='priority' value={formik.values.priority} onChange={formik.handleChange} />
-        {formik.errors.priority ? <span className='text-sm text-red-500 m-2'>{formik.errors.priority}</span> : ""}
-        <label htmlFor="" className='text-xl  font-bold text-white py-2'>User Name</label>
-        <input type="text" placeholder='Enter user name' autoComplete='off' className='outline-none border-b border-slate-500 rounded-none px-2 py-2 placeholder:text-slate-300 text-white placeholder:font-semibold' name='user' value={formik.values.user} onChange={formik.handleChange} />
-        {formik.errors.user ? <span className='text-sm text-red-500 m-2'>{formik.errors.user}</span> : ""}
-        <div className='flex items-center justify-center gap-4'>
-          <button onClick={onClose} className='px-8 py-2 bg-blue-500 hover:bg-blue-600 cursor-pointer w-fit  rounded-md inset-0 z-10 my-4 text-white font-normal'>Close</button>
-          <button type='submit' onClick={formik.handleSubmit} className='px-8 py-2 bg-blue-500 hover:bg-blue-600 cursor-pointer w-fit  rounded-md inset-0 z-10 my-4 text-white font-normal'>Submit</button>
+      <div className='bg-zinc-900 flex flex-col p-10 rounded-md w-[30%] shadow-sm shadow-cyan-200'>
+        <h1 className='text-xl text-white font-semibold text-center pb-3'>{title} Task</h1>
+        
+        {
+          inputFields.length && inputFields?.map((val)=>(
+            <CustomInput field={val.value} formik={formik}/>
+          ))
+        }
+        
+        <div className='flex items-center justify-center gap-20 mt-4'>
+          <Button onClick={onClose} variant="outline" className="cursor-pointer text-black px-10">Close</Button>
+          <Button type='submit' className="cursor-pointer bg-cyan-500 hover:bg-cyan-600 px-10" onClick={formik.handleSubmit} >Submit</Button>
         </div>
       </div>
 

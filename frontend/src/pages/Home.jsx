@@ -15,12 +15,14 @@ const Home = () => {
   const [openCreatePopop, setOpenCreatePopop] = useState(false)
   const [title, setTitle] = useState('Add')
   const { data, error, isLoading } = useQuery({ queryKey: ['todos'], queryFn: getTodos, staleTime: 10000 })
-const queryClient = useQueryClient()
+  const queryClient = useQueryClient()
 
-  const { mutate } = useMutation({ mutationFn: deleteTodo ,onSuccess:()=>{
-    queryClient.invalidateQueries(["todos"])
-  }})
-  
+  const { mutate } = useMutation({
+    mutationFn: deleteTodo, onSuccess: () => {
+      queryClient.invalidateQueries(["todos"])
+    }
+  })
+
   const finalList = data?.data || []
   const handleClose = () => {
     setOpenCreatePopop(false)
@@ -50,7 +52,7 @@ const queryClient = useQueryClient()
   }
 
   return (
-    <div className='overflow-x-auto p-10 bg-[#303030] h-screen [scrollbar-width:none]'>
+    <div className='overflow-x-auto p-10 bg-zinc-950 h-screen [scrollbar-width:none]'>
       <Header setOpenCreatePopop={setOpenCreatePopop} />
       <TodoTable headers={headers} finalList={finalList} handleSelectTodo={handleSelectTodo} />
       <TodoPopup isOpen={openCreatePopop} onClose={handleClose} title={title} editTodoData={editTodoData} />

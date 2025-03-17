@@ -1,25 +1,27 @@
 import React, { useState } from 'react'
+import { Input } from './ui/input';
+import { Button } from './ui/button';
 
-const TodoTable = ({headers,finalList,handleSelectTodo}) => {
+const TodoTable = ({ headers, finalList, handleSelectTodo }) => {
 
 
-const [search, setSearch] = useState("");
+  const [search, setSearch] = useState("");
 
-const filteredList = finalList?.filter(todo =>
-  todo?.user?.toLowerCase().includes(search.toLowerCase())
-);
+  const filteredList = finalList?.filter(todo =>
+    todo?.user?.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
     <div className='flex flex-col gap-2 mt-10'>
       <div className=' flex justify-end text-white'>
-      <input   value={search} onChange={(e) => setSearch(e.target.value)}
-      type="text" placeholder="Enter the name" className='bg-[#434343] py-2 px-4 rounded-md outline-none' />
+        <Input value={search} onChange={(e) => setSearch(e.target.value)}
+          type="text" placeholder="Enter the name" className='bg-zinc-700 focus-visible:ring-cyan-500 tracking-wider placeholder:font-semibold border-none  placeholder:text-white w-[20%] py-2 px-4 rounded-md outline-none' />
       </div>
-    <table className='min-w-full divide-y-2 divide-gray-200 dark:bg-gray-400  text-sm table-fixed'>
+      <table className='min-w-full divide-y-2 divide-gray-200 dark:bg-gray-400  text-sm table-fixed'>
         <thead className='ltr:text-left rtl:text-right '>
           <tr>
             {headers.map((header) => (
-              <th key={header?.id} className='px-4 w-1/4 py-2 font-extrabold text-md whitespace-nowrap text-white'>{header?.name}</th>
+              <th key={header?.id} className='px-4 w-1/4 py-2 font-extrabold text-lg whitespace-nowrap text-white'>{header?.name}</th>
             ))}
           </tr>
         </thead>
@@ -31,14 +33,14 @@ const filteredList = finalList?.filter(todo =>
                 <td className='px-4 py-2 whitespace-nowrap text-white'>{todo?.priority}</td>
                 <td className='px-4 py-2 whitespace-nowrap text-white'>{todo?.deadline}</td>
                 <td className='space-x-5 py-2'>
-                  <button onClick={()=>handleSelectTodo(todo._id,"view")} className='px-8 py-[9px] bg-blue-500 hover:bg-blue-600 rounded-md text-white text-md font-semibold cursor-pointer'>View</button>
-                   <button onClick={()=>handleSelectTodo(todo._id,"edit")} className='px-8 py-2 border border-blue-500 hover:bg-blue-500 rounded-md hover:text-white text-blue-500 text-md font-semibold cursor-pointer'>Edit</button>
-                   <button onClick={()=>handleSelectTodo(todo._id,"delete")} className='bg-red-500 text-white font-semibold cursor-pointer rounded-md px-8 py-[9px]'>Delete</button>
-                   </td>
-            </tr>
+                  <Button className="cursor-pointer" onClick={() => handleSelectTodo(todo._id, "view")} variant="secondary">View</Button>
+                  <Button className="cursor-pointer text-white bg-cyan-500 hover:bg-cyan-600" onClick={() => handleSelectTodo(todo._id, "edit")}  >Edit</Button>
+                  <Button className="cursor-pointer" onClick={() => handleSelectTodo(todo._id, "delete")} variant="destructive">Delete</Button>
+                </td>
+              </tr>
             )) :
               <tr >
-                <td colSpan={headers.length} className='bg-[#434343] text-white h-[72vh] text-center py-4'>No records found</td>
+                <td colSpan={headers.length} className='bg-zinc-950 text-4xl text-cyan-500 font-bold   h-[72vh] text-center py-4'>No records found</td>
               </tr>
           }
         </tbody>

@@ -5,8 +5,12 @@ import { loginUser } from '../service/api'
 import { Link, useNavigate } from 'react-router-dom'
 import { validationSchema } from '../service/utlis'
 import useAuthStore from '../store/authStore'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { Form } from '@/components/ui/form'
+import CustomInput from '@/components/CustomInput'
 const Login = () => {
-    const { login,error,setError } = useAuthStore()
+    const { login, error, setError } = useAuthStore()
     const navigate = useNavigate()
     const { mutate } = useMutation({
         mutationFn: loginUser,
@@ -16,8 +20,8 @@ const Login = () => {
             login(data?.token)
 
         },
-        onError:(error)=>{
-            setError(error?.response?.data?.message||"Error occured")
+        onError: (error) => {
+            setError(error?.response?.data?.message || "Error occured")
         }
     })
     const formik = useFormik({
@@ -26,32 +30,43 @@ const Login = () => {
             password: ""
         },
         validationSchema,
-        onSubmit: (values) => handleSubmit(values)
+        onSubmit: mutate
     })
-    const handleSubmit = (values) => {
-        mutate(values)
-    }
+    const inputFields = [{
+        id: 1,
+        value: "username"
+    }, {
+        id: 2,
+        value: "password"
+    }]
     return (
-        <div className=' h-screen flex flex-col gap-4 items-center justify-center bg-[#303030] text-white  '>
-            <h1 className='text-5xl font-semibold'>Login</h1>
-            <form onSubmit={formik.handleSubmit} className='flex flex-col gap-10 border  p-5'>
-                <div className=' flex flex-col'>
+        <div className=' h-screen flex flex-col  gap-4 items-center justify-center bg-zinc-950  '>
+            <Card className="w-[25%] shadow-md shadow-cyan-300 bg-zinc-900 border-none">
+                <CardHeader className="!gap-0">
+                    <CardTitle className=" text-center text-3xl font-extrabold  text-cyan-500">Login</CardTitle>
+                </CardHeader>
+                <CardContent className="text-white border-none ">
+                    <Form>
 
-                    <label htmlFor="">Username</label>
-                    <input type="text" name="username" className='py-3 w-full border-b border-white outline-none' value={formik.username} onChange={formik.handleChange} />
-                    {formik.touched.username && formik.errors.username && <span>{formik.errors.username}</span>}
-                </div>
-                <div className='flex flex-col'>
+                        <form onSubmit={formik.handleSubmit} className='flex flex-col    p-5 border-none'>
+                            {
+                               inputFields.length && inputFields?.map((val) => (
+                                    <div key={val.id} >
+                                        <CustomInput field={val.value} formik={formik} />
+                                    </div>
+                                ))
+                            }
+                            {error ? <span className='bg-red-500 text-white text-md font-semibold py-1 px-10 rounded-md my-3'>{error}</span> : ""}
+                            <Button type='submit' size="lg" className="cursor-pointer  bg-cyan-500 hover:bg-cyan-600 text-white w-fit flex self-center" >Login</Button>
+                            <Link to="/register" className='text-sm font-semibold text-white text-center'> Don't have an account? <Button className="text-sm  font-semibold ml-0 pl-1 cursor-pointer text-cyan-500 " variant="link">Register</Button> </Link>
+                        </form>
+                    </Form>
 
-                    <label htmlFor="">Password</label>
-                    <input type="text" name="password" className='py-3 w-full border-b border-white outline-none' value={formik.password} onChange={formik.handleChange} />
-                    {formik.touched.password && formik.errors.password && <span>{formik.errors.password}</span>}
-                </div>
-                {error?<span className='bg-red-500 text-white text-md font-semibold py-1 px-10 rounded-md'>{error}</span>:""}
-                <button type='submit' className='px-8 py-2 rounded-md cursor-pointer text-white text-md bg-blue-500 font-semibold'>Login</button>
-            </form>
-            <Link to="/register" className='text-sm font-semibold'> Don't have an account? <span className='bg-blue-500 bg-clip-text text-transparent'>Register</span> </Link>
-            {}
+
+                </CardContent>
+
+            </Card>
+
         </div>
     )
 }
