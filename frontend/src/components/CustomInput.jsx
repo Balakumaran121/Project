@@ -3,7 +3,6 @@ import { Label } from './ui/label'
 import { Input } from './ui/input'
 
 const CustomInput = ({ field,formik }) => {
-    console.log(formik.errors,field)
     return (
         <div className=' flex flex-col gap-2 h-24'>
             <Label htmlFor={`${field}`} className="text-lg capitalize text-white">{field}</Label>
