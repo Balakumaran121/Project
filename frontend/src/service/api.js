@@ -41,6 +41,11 @@ export const editTodo = async ({ id, updatedFields }) => {
     if (!response.data) throw new Error("Failed to update")
     return response.data;
 }
+export const updateStatus = async ({ id, updatedFields }) => {
+    const response = await apiClient.put(`/update/${id._id}`, updatedFields)
+    if (!response.data) throw new Error("Failed to update")
+    return response.data;
+}
 
 export const createTodo = async (newTodo) => {
     const response = await apiClient.post(`/create-todo`, newTodo)

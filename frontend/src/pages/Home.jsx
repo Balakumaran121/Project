@@ -7,7 +7,7 @@ import Header from '../components/Header'
 import TodoPopup from '../components/TodoPopup'
 import TodoTable from '../components/TodoTable'
 import useStore from '../store/todostore'
-import { deleteTodo, getTodos } from '../service/api'
+import { deleteTodo, getTodos, updateStatus } from '../service/api'
 const Home = () => {
 
   const navigate = useNavigate()
@@ -17,9 +17,19 @@ const Home = () => {
   const { data, error, isLoading } = useQuery({ queryKey: ['todos'], queryFn: getTodos, staleTime: 10000 })
 const queryClient = useQueryClient()
 
-  const { mutate } = useMutation({ mutationFn: deleteTodo ,onSuccess:()=>{
+const deleteMutation = useMutation({
+  mutationFn: deleteTodo,
+  onSuccess: () => {
     queryClient.invalidateQueries(["todos"])
-  }})
+  }
+})
+
+const statusMutation = useMutation({
+  mutationFn: updateStatus,
+  onSuccess: () => {
+    queryClient.invalidateQueries(["todos"])
+  }
+})
   
   const finalList = data?.data || []
   const handleClose = () => {
@@ -27,7 +37,7 @@ const queryClient = useQueryClient()
     setTitle("Add")
   }
 
-  const headers = [{ id: 1, name: "Task" }, { id: 2, name: "Priority" }, { id: 3, name: "Deadline" }, { id: 4, name: "Actions" }]
+  const headers = [{ id: 1, name: "Task" }, { id: 2, name: "Priority" }, { id: 3, name: "Deadline" },{ id: 4, name: "Status" }, { id: 5, name: "Actions" }]
   const { editTodoData, setEditTodo } = useStore()
   if (isLoading) return <Loader />
   if (error) return <div>Error...</div>
@@ -39,8 +49,14 @@ const queryClient = useQueryClient()
     if (label === 'edit') {
       setTitle('Edit')
       setOpenCreatePopop(true)
-    } else if (label === "delete") {
-      mutate(id)
+    }else if (label === "delete") {
+      deleteMutation.mutate(id)  
+    } else if (label === "status") {
+      if(id.status === "0"){
+        statusMutation.mutate({ id, updatedFields: { ...id,status: "1" } })
+      }else{
+        statusMutation.mutate({ id, updatedFields: { ...id,status: "0" } })
+      }
     }
 
     else {

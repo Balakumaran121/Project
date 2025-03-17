@@ -13,6 +13,8 @@ const TodoPopup = ({ isOpen, onClose, title, editTodoData }) => {
     user:Yup.string().required("Required")
   })
   // const isInitialized = useRef(false)
+  const currentDate = new Date();
+  const [day, month, year] = [currentDate.getDate(), currentDate.getMonth() + 1, currentDate.getFullYear()];
   const formik = useFormik({
     initialValues: {
       text: "",
@@ -21,7 +23,7 @@ const TodoPopup = ({ isOpen, onClose, title, editTodoData }) => {
     },
     validationSchema,
     onSubmit: (values) => {
-      const data = { ...values, deadline: '4/3/25'}
+      const data = { ...values, deadline:`${day}/${month}/${year}`,status:"0" }
       handleSubmit(data)
     }
 
