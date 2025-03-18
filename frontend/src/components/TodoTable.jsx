@@ -25,7 +25,7 @@ const filteredList = finalList?.filter(todo =>
         </thead>
         <tbody className='divide-y divide-gray-200'>
           {
-            filteredList?.length ? filteredList?.map((todo) => (
+            finalList?.length ? finalList?.map((todo) => (
               <tr className=' ' key={todo?._id}>
                 <td className='px-4 py-2 font-medium whitespace-nowrap text-white'>{todo?.text}</td>
                 <td className='px-4 py-2 whitespace-nowrap text-white'>{todo?.priority}</td>

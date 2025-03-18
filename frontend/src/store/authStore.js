@@ -6,7 +6,7 @@ const useAuthStore = create((set) => ({
         set({error:message});
         setTimeout(()=>{
             set({error:""})
-        },10000)
+        },2500)
     },
     login: (newToken) => {
         localStorage.setItem("token", newToken);
