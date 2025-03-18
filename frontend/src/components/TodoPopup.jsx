@@ -19,11 +19,12 @@ const TodoPopup = ({ isOpen, onClose, title, editTodoData }) => {
     initialValues: {
       text: "",
       priority: "",
-      user: ""
+      user: "",
+      status: false
     },
     validationSchema,
     onSubmit: (values) => {
-      const data = { ...values, deadline: '4/3/25' ,status:true}
+      const data = { ...values, deadline: '4/3/25', status: true }
       handleSubmit(data)
     }
 
@@ -69,17 +70,25 @@ const TodoPopup = ({ isOpen, onClose, title, editTodoData }) => {
   }
 
   const inputFields = [
-
-
-    {id:1,
-      value:"text"
+    {
+      id: 1,
+      value: "text",
+      type: "text"
     },
     {
-      id:2,
-      value:'priority'
+      id: 2,
+      value: 'priority',
+      type: "text"
     },
-    {id:3,
-      value:"user"
+    {
+      id: 3,
+      value: "user",
+      type: "text"
+    },
+    {
+      id: 4,
+      value: "status",
+      type: 'switch'
     }
   ]
   if (!isOpen) return null
@@ -88,13 +97,13 @@ const TodoPopup = ({ isOpen, onClose, title, editTodoData }) => {
 
       <div className='bg-zinc-900 flex flex-col p-10 rounded-md w-[30%] shadow-sm shadow-cyan-200'>
         <h1 className='text-xl text-white font-semibold text-center pb-3'>{title} Task</h1>
-        
+
         {
-          inputFields.length && inputFields?.map((val)=>(
-            <CustomInput field={val.value} formik={formik}/>
+          inputFields.length && inputFields?.map((val) => (
+            <CustomInput field={val?.value} type={val?.type} formik={formik} editTodoData={editTodoData} title={title}/>
           ))
         }
-        
+
         <div className='flex items-center justify-center gap-20 mt-4'>
           <Button onClick={onClose} variant="outline" className="cursor-pointer text-black px-10">Close</Button>
           <Button type='submit' className="cursor-pointer bg-cyan-500 hover:bg-cyan-600 px-10" onClick={formik.handleSubmit} >Submit</Button>
