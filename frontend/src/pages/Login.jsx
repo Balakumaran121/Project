@@ -4,7 +4,7 @@ import React from 'react'
 import { loginUser } from '../service/api'
 import { Link, useNavigate } from 'react-router-dom'
 import { validationSchema } from '../service/utlis'
-import useAuthStore from '../store/authStore'
+import useAuthStore from '../store/authStore';
 const Login = () => {
     const { login,error,setError } = useAuthStore()
     const navigate = useNavigate()
