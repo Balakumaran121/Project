@@ -3,7 +3,7 @@ import { Todo } from "../models/todo.model.js";
 export const getTodos = async (req, res) => {
     try {
         const { page = 1, limit = 10, user } = req.query;
-        const query = req.user.role==="admin"? {}:{user:req.user.id}
+        const query = req.user.role === "admin" ? {} : { user: req.user.id }
         if (user) {
             query.user = user
         }

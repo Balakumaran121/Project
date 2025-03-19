@@ -4,7 +4,7 @@ import React from 'react'
 import { registerUser } from '../service/api'
 import { Link, useNavigate } from 'react-router-dom'
 import { registerValidationSchema } from '../service/utlis'
-import { Card, CardContent,  CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form } from '@/components/ui/form'
 import { Button } from '@/components/ui/button'
 import CustomInput from '@/components/CustomInput'
@@ -20,9 +20,9 @@ const Register = () => {
         initialValues: {
             username: "",
             password: "",
-            role:""
+            role: ""
         },
-        validationSchema:registerValidationSchema,
+        validationSchema: registerValidationSchema,
         onSubmit: (values) => mutate(values)
     })
     const inputFields = [{
@@ -33,10 +33,10 @@ const Register = () => {
         value: "password"
     },
     {
-        id:3,
-        value:"role"
+        id: 3,
+        value: "role"
     }
-]
+    ]
     return (
         <div className=' h-screen flex flex-col gap-4 items-center justify-center bg-zinc-950 text-white  '>
             <Card className="w-[25%] shadow-md shadow-cyan-300 bg-zinc-900 border-none">

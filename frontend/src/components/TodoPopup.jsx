@@ -12,7 +12,7 @@ const TodoPopup = ({ isOpen, onClose, title, editTodoData }) => {
   const validationSchema = Yup.object({
     text: Yup.string().required('Text Required'),
     priority: Yup.string().required('Priority Required'),
-    user: Yup.object().required("User Required").test('is-not-empty','User is required',(value)=>value && Object.keys(value).length>0),
+    user: Yup.object().required("User Required").test('is-not-empty', 'User is required', (value) => value && Object.keys(value).length > 0),
   })
 
   const formik = useFormik({
@@ -30,8 +30,8 @@ const TodoPopup = ({ isOpen, onClose, title, editTodoData }) => {
 
   })
 
-  const { data } = useQuery({ queryKey: ['users'], queryFn:getUsers, staleTime: 10000 })
-  const options = data?.map((val)=>({label:val.username,value:val}))
+  const { data } = useQuery({ queryKey: ['users'], queryFn: getUsers, staleTime: 10000 })
+  const options = data?.map((val) => ({ label: val.username, value: val }))
 
   useEffect(() => {
     if (title === "Edit" && editTodoData) {
@@ -53,8 +53,8 @@ const TodoPopup = ({ isOpen, onClose, title, editTodoData }) => {
       onClose()
       formik.resetForm()
     },
-    onError:(err)=>{
-    console.log("Error Occured: ",err)
+    onError: (err) => {
+      console.log("Error Occured: ", err)
     }
   })
 
@@ -104,12 +104,12 @@ const TodoPopup = ({ isOpen, onClose, title, editTodoData }) => {
 
         {
           inputFields.length && inputFields?.map((val) => (
-            <CustomInput field={val?.value} type={val?.type} formik={formik} editTodoData={editTodoData} title={title} options={options}/>
+            <CustomInput field={val?.value} type={val?.type} formik={formik} editTodoData={editTodoData} title={title} options={options} />
           ))
         }
         <div className='flex items-center justify-center gap-20 mt-4'>
           <Button onClick={onClose} variant="outline" className="cursor-pointer text-black px-10">Close</Button>
-          <Button  type="submit" className="cursor-pointer bg-cyan-500 hover:bg-cyan-600 px-10" onClick={formik.handleSubmit} >Submit</Button>
+          <Button type="submit" className="cursor-pointer bg-cyan-500 hover:bg-cyan-600 px-10" onClick={formik.handleSubmit} >Submit</Button>
         </div>
       </div>
 

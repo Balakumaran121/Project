@@ -6,7 +6,7 @@ export const validationSchema = Yup.object({
 })
 
 export const registerValidationSchema = Yup.object({
-    username:Yup.string().required("Username is required"),
-    password:Yup.string().required("Password is required"),
-    role:Yup.string().required("Role is required")
+    username: Yup.string().required("Username is required"),
+    password: Yup.string().required("Password is required"),
+    role: Yup.string().required("Role is required")
 })

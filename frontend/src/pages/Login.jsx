@@ -50,7 +50,7 @@ const Login = () => {
 
                         <form onSubmit={formik.handleSubmit} className='flex flex-col    p-5 border-none'>
                             {
-                               inputFields.length && inputFields?.map((val) => (
+                                inputFields.length && inputFields?.map((val) => (
                                     <div key={val.id} >
                                         <CustomInput field={val.value} formik={formik} />
                                     </div>

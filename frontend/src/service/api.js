@@ -28,9 +28,9 @@ export const getTodos = async () => {
     return response.data;
 }
 
-export const getUsers = async ()=>{
-    const  response = await authClient.get("/users")
-    if(!response.data) throw new Error("Erro Occured")
+export const getUsers = async () => {
+    const response = await authClient.get("/users")
+    if (!response.data) throw new Error("Erro Occured")
     return response.data
 }
 export const deleteTodo = async (id) => {
@@ -57,4 +57,4 @@ export const getSingleTodos = async (id) => {
     const response = await apiClient.get(`/${id}`)
     if (!response.data) throw new Error("Error fetching todos.")
     return response.data
-  }
+}
