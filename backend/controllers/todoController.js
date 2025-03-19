@@ -3,14 +3,14 @@ import { Todo } from "../models/todo.model.js";
 export const getTodos = async (req, res) => {
     try {
         const { page = 1, limit = 10, user } = req.query;
-        const query = {}
+        const query = req.user.role==="admin"? {}:{user:req.user.id}
         if (user) {
             query.user = user
         }
         // if (!req.user || !req.user.id) {
         //     return res.status(403).json({ success: false, message: "Unauthorized" });
         // }
-        const result = await Todo.find(query).skip((page - 1) * limit).limit(parseInt(limit))
+        const result = await Todo.find(query).populate("user").skip((page - 1) * limit).limit(parseInt(limit))
         const totalTodos = await Todo.countDocuments(query)
         res.send({
             success: true,

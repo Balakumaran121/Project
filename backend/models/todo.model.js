@@ -4,7 +4,7 @@ const todoSchema = new Schema({
     text:{type:String,required:true},
     priority:{type:String,required:true},
     deadline:{type:String,required:true},
-    user:{type:String,required:true},
+    user:{type:mongoose.Schema.Types.ObjectId,ref:'User'},
     status:{type:Boolean,required:true}
 }) 
 

@@ -24,7 +24,7 @@ const Home = () => {
     setOpenCreatePopop(false)
     setTitle("Add")
   }
-  const headers = [{ id: 1, name: "Task" }, { id: 2, name: "Priority" }, { id: 3, name: "Deadline" },{id:4,name:"Status"} ,{ id: 5, name: "Actions" }]
+  const headers = [{ id: 1, name: "Task" },{id:2,name:"Username"}, { id: 3, name: "Priority" }, { id: 4, name: "Deadline" },{id:5,name:"Status"} ,{ id: 6, name: "Actions" }]
   const { editTodoData, setEditTodo } = useStore()
   if (isLoading) return <Loader />
   if (error) return <div>Error...</div>

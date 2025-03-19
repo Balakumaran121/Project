@@ -8,9 +8,9 @@ const TodoTable = ({ headers, finalList, handleSelectTodo }) => {
 
   const [search, setSearch] = useState("");
 
-  const filteredList = finalList?.filter(todo =>
-    todo?.user?.toLowerCase().includes(search.toLowerCase())
-  );
+
+const filteredList = finalList?.filter(todo=>Object.values(todo).some(val=>(typeof val==='string' && val.toLowerCase() ===search?.toLowerCase())||(val?.username && val.username.toLowerCase() ===search?.toLowerCase())))
+
 const getPriorityIcons = (field)=>{
   switch(field?.toLowerCase()){
     case 'high':
@@ -21,6 +21,7 @@ const getPriorityIcons = (field)=>{
       return <Equal  className="text-cyan-500"/>
   }
 }
+const displayedList = filteredList?.length >0 && search ? filteredList:finalList
   return (
     <div className='flex flex-col gap-2 mt-10'>
       <div className=' flex justify-end text-white'>
@@ -37,9 +38,10 @@ const getPriorityIcons = (field)=>{
         </thead>
         <tbody className='divide-y divide-gray-200'>
           {
-            filteredList?.length ? filteredList?.map((todo) => (
+            displayedList ?displayedList?.map((todo) => (
               <tr className=' ' key={todo?._id}>
                 <td className='px-4 py-2 font-medium whitespace-nowrap text-white'>{todo?.text}</td>
+                <td className='px-4 py-2 font-medium whitespace-nowrap text-white'>{todo?.user?.username}</td>
                 <td className="px-4 py-2 whitespace-nowrap text-white flex items-center">
                   <span>{getPriorityIcons(todo?.priority)}</span>
                   <p >
