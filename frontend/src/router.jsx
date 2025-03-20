@@ -9,14 +9,14 @@ import ProtectedRoute from './components/ProtectedRoute'
 const Router = () => {
     return (
         <Routes>
-            <Route index path='/' element={<Login/>}/>
-            <Route path='/register' element={<Register/>}/>
-            <Route element={<ProtectedRoute/>}>
+            <Route index path='/' element={<Login />} />
+            <Route path='/register' element={<Register />} />
+            <Route element={<ProtectedRoute />}>
 
-            <Route path='/home' element={<Home />} />
-            <Route path='/view/:id' element={<View />} />
+                <Route path='/home' element={<Home />} />
+                <Route path='/view/:id' element={<View />} />
             </Route>
-            <Route path='*' element={<Navigate to="/" replace/>}/>
+            <Route path='*' element={<Navigate to="/" replace />} />
         </Routes>
     )
 }

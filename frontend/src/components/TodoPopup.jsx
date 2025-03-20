@@ -2,35 +2,46 @@
 import React, { useEffect } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { createTodo, editTodo } from '../service/api'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { createTodo, editTodo, getUsers } from '../service/api'
+import { Button } from './ui/button'
+import CustomInput from './CustomInput'
 const TodoPopup = ({ isOpen, onClose, title, editTodoData }) => {
 
 
   const validationSchema = Yup.object({
-    text: Yup.string().required('Required'),
-    priority: Yup.string().required('Required')
+    text: Yup.string().required('Text Required'),
+    priority: Yup.string().required('Priority Required'),
+    user: Yup.object().required("User Required").test('is-not-empty', 'User is required', (value) => value && Object.keys(value).length > 0),
   })
-  // const isInitialized = useRef(false)
+
   const formik = useFormik({
     initialValues: {
       text: "",
-      priority: ""
+      priority: "",
+      user: {},
+      status: false
     },
     validationSchema,
     onSubmit: (values) => {
-      const data = { ...values, deadline: '4/3/25' }
+      const data = { ...values, deadline: '4/3/25', status: true }
       handleSubmit(data)
     }
 
   })
+
+  const { data } = useQuery({ queryKey: ['users'], queryFn: getUsers, staleTime: 10000 })
+  const options = data?.map((val) => ({ label: val.username, value: val }))
+
   useEffect(() => {
     if (title === "Edit" && editTodoData) {
       formik.setValues(editTodoData)
-    } else {
-      formik.resetForm()
     }
-  }, [editTodoData, title])
+    else {
+      formik.resetForm()
+      formik.setErrors({})
+    }
+  }, [editTodoData, title, isOpen])
 
 
   const queryClient = useQueryClient()
@@ -42,9 +53,9 @@ const TodoPopup = ({ isOpen, onClose, title, editTodoData }) => {
       onClose()
       formik.resetForm()
     },
-    // onError:()=>{
-    //   onClose()
-    // }
+    onError: (err) => {
+      console.log("Error Occured: ", err)
+    }
   })
 
   const { mutate: editMutate } = useMutation({
@@ -61,21 +72,44 @@ const TodoPopup = ({ isOpen, onClose, title, editTodoData }) => {
       editMutate({ id: editTodoData?._id, updatedFields: values })
     }
   }
+
+  const inputFields = [
+    {
+      id: 1,
+      value: "text",
+      type: "text"
+    },
+    {
+      id: 2,
+      value: 'priority',
+      type: "text"
+    },
+    {
+      id: 3,
+      value: "user",
+      type: "select"
+    },
+    {
+      id: 4,
+      value: "status",
+      type: 'text'
+    }
+  ]
   if (!isOpen) return null
   return (
-    <div className='fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-25 z-10'>
+    <div className='fixed top-0 left-0 w-full h-full flex  justify-center items-center bg-zinc-950 bg-opacity-25 z-10'>
 
+      <div className='bg-zinc-900 flex flex-col p-10 rounded-md w-[30%] shadow-sm shadow-cyan-200'>
+        <h1 className='text-xl text-white font-semibold text-center pb-3'>{title} Task</h1>
 
-      <div className='bg-[#434343] flex flex-col p-10 rounded-md w-[30%]'>
-        <label htmlFor="" className='text-xl font-bold text-white py-2'>{title} Task </label>
-        <input type="text" placeholder='Enter task name' className='outline-none  border-b border-slate-500 rounded-md px-2 py-2 placeholder:text-slate-300 placeholder:font-semibold text-white' name='text' value={formik.values.text} onChange={formik.handleChange} />
-        {formik.errors.text ? <span className='text-sm text-red-500 m-2'>{formik.errors.text}</span> : ""}
-        <label htmlFor="" className='text-xl  font-bold text-white py-2'>Priority</label>
-        <input type="text" placeholder='Enter priority level' className='outline-none border-b border-slate-500 rounded-md px-2 py-2 placeholder:text-slate-300 text-white placeholder:font-semibold' name='priority' value={formik.values.priority} onChange={formik.handleChange} />
-        {formik.errors.priority ? <span className='text-sm text-red-500 m-2'>{formik.errors.priority}</span> : ""}
-        <div className='flex items-center justify-center gap-4'>
-          <button onClick={onClose} className='px-8 py-2 bg-blue-500 hover:bg-blue-600 cursor-pointer w-fit  rounded-md inset-0 z-10 my-4 text-white font-normal'>Close</button>
-          <button type='submit' onClick={formik.handleSubmit} className='px-8 py-2 bg-blue-500 hover:bg-blue-600 cursor-pointer w-fit  rounded-md inset-0 z-10 my-4 text-white font-normal'>Submit</button>
+        {
+          inputFields.length && inputFields?.map((val) => (
+            <CustomInput field={val?.value} type={val?.type} formik={formik} editTodoData={editTodoData} title={title} options={options} />
+          ))
+        }
+        <div className='flex items-center justify-center gap-20 mt-4'>
+          <Button onClick={onClose} variant="outline" className="cursor-pointer text-black px-10">Close</Button>
+          <Button type="submit" className="cursor-pointer bg-cyan-500 hover:bg-cyan-600 px-10" onClick={formik.handleSubmit} >Submit</Button>
         </div>
       </div>
 
