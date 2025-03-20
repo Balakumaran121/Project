@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const TodoTable = ({headers,finalList,handleSelectTodo}) => {
+const TodoTable = ({headers,finalList,handleSelectTodo,setOpenCreatePopop}) => {
 
 
 const [search, setSearch] = useState("");
@@ -11,9 +11,11 @@ const filteredList = finalList?.filter(todo =>
 
   return (
     <div className='flex flex-col gap-2 mt-10'>
-      <div className=' flex justify-end text-white'>
+      <div className=' flex justify-end gap-x-4 text-white'>
       <input   value={search} onChange={(e) => setSearch(e.target.value)}
-      type="text" placeholder="Enter the name" className='bg-[#434343] py-2 px-4 rounded-md outline-none' />
+      type="text" placeholder="Find the Task or Name" className='bg-[#434343] py-2 px-4 rounded-md outline-none' />
+        <button className=' rounded-md cursor-pointer text-md text-white bg-blue-500 font-semibold px-8 py-2 ' onClick={() => setOpenCreatePopop(true)}>Create Task</button>
+      
       </div>
     <table className='min-w-full divide-y-2 divide-gray-200 dark:bg-gray-400  text-sm table-fixed'>
         <thead className='ltr:text-left rtl:text-right '>

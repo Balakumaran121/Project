@@ -68,10 +68,12 @@ const statusMutation = useMutation({
   }
 
   return (
-    <div className='overflow-x-auto p-10 bg-[#303030] h-screen [scrollbar-width:none]'>
+    <div className='overflow-x-auto bg-[#303030] h-screen [scrollbar-width:none]'>
       <Header setOpenCreatePopop={setOpenCreatePopop} />
-      <TodoTable headers={headers} finalList={finalList} handleSelectTodo={handleSelectTodo} />
-      <TodoPopup isOpen={openCreatePopop} onClose={handleClose} title={title} editTodoData={editTodoData} />
+        <div className='px-12'>
+          <TodoTable headers={headers} finalList={finalList} handleSelectTodo={handleSelectTodo} setOpenCreatePopop={setOpenCreatePopop} />
+          <TodoPopup isOpen={openCreatePopop} onClose={handleClose} title={title} editTodoData={editTodoData} />
+        </div>
     </div>
 
   )
