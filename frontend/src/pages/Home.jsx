@@ -52,10 +52,12 @@ const statusMutation = useMutation({
     }else if (label === "delete") {
       deleteMutation.mutate(id)  
     } else if (label === "status") {
-      if(id.status === "0"){
-        statusMutation.mutate({ id, updatedFields: { ...id,status: "1" } })
+      if(id.status){
+        console.log(id,"1")
+        statusMutation.mutate({ id, updatedFields: { ...id,status: false } })
       }else{
-        statusMutation.mutate({ id, updatedFields: { ...id,status: "0" } })
+        console.log(id,"2")
+        statusMutation.mutate({ id, updatedFields: { ...id,status: true } })
       }
     }
 

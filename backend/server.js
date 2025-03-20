@@ -6,7 +6,7 @@ import todoRoutes from './routes/todoRoutes.js';
 import authRoutes from './routes/authRoutes.js'
 dotenv.config()
 const app = express()
-const port = process.env.port || 4000
+const port = process.env.PORT || 4000
 const corsOptions = {
     origin: "*",
     methods: ['GET', 'POST', 'PUT', 'DELETE'],

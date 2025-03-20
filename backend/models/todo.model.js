@@ -1,11 +1,11 @@
-import mongoose,{model, Schema} from "mongoose";
+import mongoose, { model, Schema } from "mongoose";
 
 const todoSchema = new Schema({
-    text:{type:String,required:true},
-    priority:{type:String,required:true},
-    deadline:{type:String,required:true},
-    user:{type:String,required:true},
-    status:{type:String,required:true}
-}) 
+    text: { type: String, required: true },
+    priority: { type: String, required: true },
+    deadline: { type: String, required: true },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    status: { type: Boolean, required: true }
+})
 
-export const Todo = mongoose.models.Todo||new model("Todo",todoSchema)
+export const Todo = mongoose.models.Todo || new model("Todo", todoSchema)

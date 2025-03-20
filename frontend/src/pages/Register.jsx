@@ -10,8 +10,8 @@ const Register = () => {
     const [roleToggle, setRoleToggle] = useState(false);
     const [isError, setIsError] = useState('');
     const roleData = [
-        { id: 1, name: 'Admin' },
-        { id: 2, name: 'User' }
+        { id: 1, name: 'admin' },
+        { id: 2, name: 'user' }
     ];
 
     const dropdownRef = useRef(null);
@@ -70,7 +70,7 @@ const Register = () => {
                                             formik.setFieldValue('role', role.name);
                                             setRoleToggle(false);
                                         }}
-                                        className='p-2 cursor-pointer hover:bg-[#3485bd]/50'
+                                        className='p-2 cursor-pointer capitalize hover:bg-[#3485bd]/50'
                                     >
                                         {role.name}
                                     </li>
