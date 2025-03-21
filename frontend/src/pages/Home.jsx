@@ -37,13 +37,12 @@ const statusMutation = useMutation({
     setTitle("Add")
   }
 
-  const headers = [{ id: 1, name: "Task" }, { id: 2, name: "Priority" }, { id: 3, name: "Deadline" },{ id: 4, name: "Status" }, { id: 5, name: "Actions" }]
+  const headers = [{id:1,name:"User"},{ id: 2, name: "Task" }, { id: 3, name: "Priority" }, { id: 4, name: "Deadline" },{ id: 5, name: "Status" }, { id: 6, name: "Actions" }]
   const { editTodoData, setEditTodo } = useStore()
   if (isLoading) return <Loader />
   if (error) return <div>Error...</div>
   // if ((finalList).length === 0) return <div>No data found</div>
   const handleSelectTodo = (id, label) => {
-    // setTodoId(id)
     const todo = finalList.find((todo) => todo._id === id)
     setEditTodo(todo)
     if (label === 'edit') {
