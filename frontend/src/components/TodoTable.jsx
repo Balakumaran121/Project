@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import deleteIcn from '../assets/images/delete.svg';
 import view from '../assets/images/view.svg';
 import edit from '../assets/images/edit.svg';
+import useAuthStore from '../store/authStore';
 
 
 const TodoTable = ({headers,finalList,handleSelectTodo,setOpenCreatePopop}) => {
+
+  const { userData } = useAuthStore(); 
 
 
 const [search, setSearch] = useState("");
@@ -27,7 +30,8 @@ const filteredList = finalList.filter(todo =>
       <div className=' flex justify-end gap-x-4 text-gray-400'>
       <input   value={search} onChange={(e) => setSearch(e.target.value)}
       type="text" placeholder="Find the Task or Name" className='bg-[#f5f5f5] py-2 px-4 rounded-md outline-none' />
-        <button className=' rounded-md cursor-pointer text-md text-white bg-blue-500 font-semibold px-8 py-2 ' onClick={() => setOpenCreatePopop(true)}>Create Task</button>
+      {userData?.role === "admin" && (<button className=' rounded-md cursor-pointer text-md text-white bg-blue-500 font-semibold px-8 py-2 ' onClick={() => setOpenCreatePopop(true)}>Create Task</button>)}
+        
       
       </div>
     <table className='min-w-full divide-y-2 divide-gray-200 dark:bg-gray-400 border-b  text-sm table-fixed'>

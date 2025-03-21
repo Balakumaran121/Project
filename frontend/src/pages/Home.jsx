@@ -11,7 +11,6 @@ import { deleteTodo, getTodos, updateStatus } from '../service/api'
 const Home = () => {
 
   const navigate = useNavigate()
-  // const [todoId, setTodoId] = useState('')
   const [openCreatePopop, setOpenCreatePopop] = useState(false)
   const [title, setTitle] = useState('Add')
   const { data, error, isLoading } = useQuery({ queryKey: ['todos'], queryFn: getTodos, staleTime: 10000 })

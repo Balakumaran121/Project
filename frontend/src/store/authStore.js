@@ -2,11 +2,15 @@ import { create } from "zustand";
 const useAuthStore = create((set) => ({
     token: localStorage.getItem("token") || null,
     error:"",
+    userData:{},
     setError:(message)=>{
         set({error:message});
         setTimeout(()=>{
             set({error:""})
         },2500)
+    },
+    setUserData:(data)=>{
+        set({userData:data})
     },
     login: (newToken,id) => {
         localStorage.setItem("token", newToken);
