@@ -22,6 +22,11 @@ export const logoutUser = () => {
     localStorage.removeItem("token");
 };
 
+export const getUsers = async () => {
+    const response = await authClient.get("/users")
+    if (!response.data) throw new Error("Erro Occured")
+    return response.data
+}
 export const getTodos = async () => {
     const response = await apiClient.get()
     if (!response.data) throw new Error("Error Occured")

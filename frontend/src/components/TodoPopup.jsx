@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { use, useEffect, useRef, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createTodo, editTodo } from "../service/api";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { createTodo, editTodo,getUsers } from "../service/api";
 import useClickOutside from "../commonHooks/useClickOutside";
 
 const TodoPopup = ({ isOpen, onClose, title, editTodoData }) => {
@@ -20,17 +20,27 @@ const TodoPopup = ({ isOpen, onClose, title, editTodoData }) => {
     priority: Yup.string().required("Required"),
   });
 
+const userId = localStorage.getItem('id')
+
   const currentDate = new Date();
   const formattedDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`;
-
+  const { data: userData } = useQuery({ 
+    queryKey: ['users'], 
+    queryFn: getUsers, 
+    staleTime: 1000 
+  });
+  const privateUser = userData?.find((user) => user._id === userId);
   const formik = useFormik({
     initialValues: {
       text: "",
       priority: "",
+      status: false,
+      user: privateUser
     },
     validationSchema,
+    enableReinitialize: true,
     onSubmit: (values) => {
-      const data = { ...values, deadline: formattedDate, status: "0" };
+      const data = { ...values, deadline: formattedDate };
       handleSubmit(data);
     },
   });

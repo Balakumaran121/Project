@@ -8,8 +8,9 @@ const useAuthStore = create((set) => ({
             set({error:""})
         },2500)
     },
-    login: (newToken) => {
+    login: (newToken,id) => {
         localStorage.setItem("token", newToken);
+        localStorage.setItem("id",id );
         set({ token: newToken })
     },
     logout: () => {

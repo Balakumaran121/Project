@@ -53,10 +53,8 @@ const statusMutation = useMutation({
       deleteMutation.mutate(id)  
     } else if (label === "status") {
       if(id.status){
-        console.log(id,"1")
         statusMutation.mutate({ id, updatedFields: { ...id,status: false } })
       }else{
-        console.log(id,"2")
         statusMutation.mutate({ id, updatedFields: { ...id,status: true } })
       }
     }
@@ -70,7 +68,7 @@ const statusMutation = useMutation({
   return (
     <div className='overflow-x-auto bg-[#303030] h-screen [scrollbar-width:none]'>
       <Header setOpenCreatePopop={setOpenCreatePopop} />
-        <div className='px-12'>
+        <div className='p-12 bg-white h-[91vh]'>
           <TodoTable headers={headers} finalList={finalList} handleSelectTodo={handleSelectTodo} setOpenCreatePopop={setOpenCreatePopop} />
           <TodoPopup isOpen={openCreatePopop} onClose={handleClose} title={title} editTodoData={editTodoData} />
         </div>
